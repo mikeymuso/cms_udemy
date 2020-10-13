@@ -1,3 +1,5 @@
+<?php include "delete_modal.php"?>
+
 <?php
 
     if(isset($_POST['checkboxArray'])){
@@ -38,17 +40,17 @@
                         $post_title = $row['post_title'];
                         $post_category_id = $row['post_category_id'];
                         $post_author = $row['post_author'];
+                        $post_author_id = $row['post_author_id'];
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
                         $post_tags = $row['post_tags'];
-                        $post_comment_count = $row['post_comment_count'];
                         $post_status = $row['post_status'];
                     }
                     
-                    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
+                    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_author_id, post_date, post_image, post_content, post_tags, post_status) ";
     
-                    $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
+                    $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', '{$post_author_id}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
 
                     $clone_post_query = mysqli_query($connection,$query);
                     
@@ -71,9 +73,9 @@
 
 
 ?>
-   
 
-   <form action="" method="post">
+
+<form action="" method="post">
     <table class="table table-bordered table-hover">
 
         <div id="bulkOptionContainer" class="col-xs-4" style="padding:0 0 20px 0 !important">
@@ -115,24 +117,26 @@
 
                 <?php
                        
-                $query = "SELECT * FROM posts ORDER BY post_id DESC";
+                $query = "SELECT * FROM posts ORDER BY post_date DESC";
                 $select_posts = mysqli_query($connection,$query);
 
-                while($row = mysqli_fetch_assoc($select_posts)){
-                    $post_id = $row['post_id'];
-                    $post_title = $row['post_title'];
-                    $post_category_id = $row['post_category_id'];
-                    $post_author_id = $row['post_author_id'];
-                    $post_date = $row['post_date'];
-                    $post_image = $row['post_image'];
-                    $post_content = $row['post_content'];
-                    $post_tags = $row['post_tags'];
-                    $post_status = $row['post_status'];
-                    $post_views_count = $row['post_views_count'];
+                 if(!mysqli_num_rows($select_posts) == 0) {
+                
+                    while($row = mysqli_fetch_assoc($select_posts)){
+                        $post_id = $row['post_id'];
+                        $post_title = $row['post_title'];
+                        $post_category_id = $row['post_category_id'];
+                        $post_author_id = $row['post_author_id'];
+                        $post_date = $row['post_date'];
+                        $post_image = $row['post_image'];
+                        $post_content = $row['post_content'];
+                        $post_tags = $row['post_tags'];
+                        $post_status = $row['post_status'];
+                        $post_views_count = $row['post_views_count'];
 
-                    echo "<tr>";
-                    
-                    ?>
+                        echo "<tr>";
+
+                        ?>
 
                 <td><input type="checkbox" class="checkboxes" name="checkboxArray[]" value="<?php echo $post_id;?>"></td>
 
@@ -178,19 +182,19 @@
                     echo "<td><a href='../post.php?post_id={$post_id}'>View Post</a></td>";
 
                     echo "<td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
-                    echo "<td><a onclick=\"javascript: return confirm('Are you sure you want to delete? This will also delete all associated comments.'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";
-
-                            
-                    echo "</tr>";
+                    echo "<td><a rel='{$post_id}' href='javascript: void(0)' class='delete_link'>Delete</a></td>";
+                        
+                }
+                     
+                    echo "</tr></tbody></table>";
+                    // End of table 
+                     
+                } else {
+                     echo "</tr></tbody></table><div class='alert alert-info'>No posts</div>";
                 }
 
 
-                ?>
-
-
-
-                <?php
-            
+                // Delete posts
                 if(isset($_GET['delete'])){
                     $delete_post_id = escape($_GET['delete']);
                     
@@ -204,12 +208,25 @@
                     header("Location: posts.php");
                     
                     confirmQuery($delete_query);
-                    
-                    
-                    
+                        
                 }
                 
                 ?>
+
+                <script>
+                    // Script for delete modal
+                    $(document).ready(function() {
+
+                        $(".delete_link").on('click', function() {
+                            var id = $(this).attr("rel");
+                            var delete_url = "posts.php?delete=" + id;
+
+                            $(".modal_delete_link").attr("href", delete_url);
+                            $("#myModal").modal('show');
+                        });
+
+                    })
+                </script>
 
             </tr>
         </tbody>

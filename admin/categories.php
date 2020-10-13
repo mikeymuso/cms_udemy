@@ -50,6 +50,8 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Category Title</th>
+                                    <th>Delete</th>
+                                    <th>Update</th>
                                 </tr>
                             </thead>
                             <tbody>

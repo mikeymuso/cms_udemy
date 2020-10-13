@@ -54,7 +54,6 @@
                 <th>Author</th>
                 <th>Comment</th>
                 <th>Status</th>
-                <!--            <th>In Response to</th>-->
                 <th>Date</th>
                 <th>Approve</th>
                 <th>Unapprove</th>

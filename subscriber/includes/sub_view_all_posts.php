@@ -37,9 +37,9 @@
 
 
 ?>
-   
 
-   <form action="" method="post">
+
+<form action="" method="post">
     <table class="table table-bordered table-hover">
 
         <div id="bulkOptionContainer" class="col-xs-4" style="padding:0 0 20px 0 !important">
@@ -104,9 +104,9 @@
 
                         ?>
 
-                    <td><input type="checkbox" class="checkboxes" name="checkboxArray[]" value="<?php echo $post_id;?>"></td>
+                <td><input type="checkbox" class="checkboxes" name="checkboxArray[]" value="<?php echo $post_id;?>"></td>
 
-                    <?php
+                <?php
 
 
                         $query = "SELECT * FROM users WHERE user_id = $post_author_id";
@@ -147,7 +147,7 @@
                         echo "<td><a href='../post.php?post_id={$post_id}'>View Post</a></td>";
 
                         echo "<td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
-                        echo "<td><a onclick=\"javascript: return confirm('Are you sure you want to delete? This will also delete all associated comments.'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";
+                        echo "<td><a rel='{$post_id}' href='javascript: void(0)' class='delete_link'>Delete</a></td>";
 
                     }
                     
@@ -158,13 +158,8 @@
                     echo "</tr></tbody></table><div class='alert alert-info'>No posts</div>";
                 }
 
-
-                ?>
-
-
-
-                <?php
-            
+                
+                // Delete posts
                 if(isset($_GET['delete'])){
                     $delete_post_id = escape($_GET['delete']);
                     
@@ -180,10 +175,24 @@
                     confirmQuery($delete_query);
                     
                     
-                    
                 }
                 
                 ?>
+
+                <script>
+                    // Script for delete modal
+                    $(document).ready(function() {
+
+                        $(".delete_link").on('click', function() {
+                            var id = $(this).attr("rel");
+                            var delete_url = "posts.php?delete=" + id;
+
+                            $(".modal_delete_link").attr("href", delete_url);
+                            $("#myModal").modal('show');
+                        });
+
+                    })
+                </script>
 
             </tr>
         </tbody>

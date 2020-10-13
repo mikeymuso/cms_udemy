@@ -4,9 +4,7 @@
             <th>Id</th>
             <th>Author</th>
             <th>Comment</th>
-            <th>Email</th>
             <th>Status</th>
-<!--            <th>In Response to</th>-->
             <th>Date</th>
             <th>Approve</th>
             <th>Disapprove</th>
@@ -48,34 +46,16 @@
                     echo "<td><a href='../post.php?post_id=$comment_post_id'>{$comment_content}</a></td>";
 
 
-    //                    $query = "SELECT * FROM categories WHERE cat_id = $post_category_id";
-    //                    
-    //                    $select_categories_id = mysqli_query($connection,$query);
-    //
-    //                    while($row = mysqli_fetch_assoc($select_categories_id)){
-    //                    $cat_id = $row['cat_id'];
-    //                    $cat_title = $row['cat_title'];
-    //                    
-    //                    }
-
                     echo "<td>{$comment_status}</td>";
-
-//                    $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
-//                    $select_post = mysqli_query($connection, $query);
-//
-//                    while($row = mysqli_fetch_assoc($select_post)){
-//                        $post_id = $row['post_id'];
-//                        $post_title = $row['post_title'];
-//                    }
-//
-//                    echo "<td><a href='../post.php?post_id=$post_id'>{$post_title}</a></td>";                    
                     echo "<td>{$comment_date}</td>";
 
 
                     echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
                     echo "<td><a href='comments.php?disapprove=$comment_id'>Disapprove</a></td>";
+                    
+                    
+                    
                     echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
-
 
                     echo "</tr>";
                 }

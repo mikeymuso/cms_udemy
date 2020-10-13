@@ -28,7 +28,7 @@
 
         <form action="index.php" method="post">
             <div>
-                <h4>Hi <?php echo $user_name;?></h4>
+                <h4>Logged in as: <?php echo $user_name;?></h4>
                 <a href="includes/logout.php" class="btn btn-primary">Log Out</a>
             </div>
         </form>
