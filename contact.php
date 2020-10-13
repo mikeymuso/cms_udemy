@@ -14,8 +14,8 @@
         $to = "mikeyc87@me.com";
         $from = escape($_POST['email']);
         $subject = escape($_POST['subject']);
-        $body = "From: " . escape($_POST['body']);
-        $header = $from;
+        $body = escape($_POST['body']);
+        $header = "From: " . $from;
         
         
         
