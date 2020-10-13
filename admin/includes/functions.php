@@ -107,3 +107,31 @@ function delete_category(){
     }
 
 }
+
+function countByTable($table){
+    
+    global $connection;
+
+    $query = "SELECT * FROM $table";
+    $select_all_from_table = mysqli_query($connection,$query);
+    
+    confirmQuery($select_all_from_table);
+
+    return mysqli_num_rows($select_all_from_table);  
+  
+}
+
+function countByAttribute($table, $column, $attribute){
+    
+    global $connection;
+    
+    $query = "SELECT * FROM $table WHERE $column = '$attribute'";
+    $select_all_from_table = mysqli_query($connection,$query);
+        
+    confirmQuery($select_all_from_table);
+    
+    return mysqli_num_rows($select_all_from_table);
+    
+}
+    
+    
